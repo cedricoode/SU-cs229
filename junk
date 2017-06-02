@@ -1,0 +1,185 @@
+fit model p on training set
+on a cross validation/test example x, predict y
+xi(test) , yi(test)
+silimar to suppervised learning, evaluating how we get 
+when having a very skew examples
+good evaluation methods is precesion/recall
+if you have a cross validation set, try different values of epsilon, 
+training cross validation set, continuing evaluating, F1 score. do the final 
+anomaly detection vs supervised learning.
+we have some examples labled, why don't use supervised learning
+
+anomaly detection
+very small number of positive examples
+Large number of negative examples
+many diffrent types of anomalies hard for any algorithm to learn from positive examples what the anomalies look like; future anomalies may look nothing like any of the anomalous examples we've seen so far.
+
+supervised learning
+Large number of positive and negative examples.
+Enough positive examples for alogorithm to get a sense of what positive examples are like, future positive examples likely to be similar to ones in training set.
+
+
+
+
+
+
+
+
+anomaly detection		supervised learning
+fraud detection                 email spam classification
+naufacturing 			weather prediction
+monitoring machines		cancer classification
+
+
+choosing what features to use:
+Non-gaussian features
+what i often do is to transform the data in one way or another
+take a log transformation of the data, for example, then the shape of the data might be gaussiandistribution.
+or add a constant to the variable transformation.
+or to add a power of some number.
+
+monitoring computers in a data center
+choose features that might take on unusually large or small values in the event of an anomaly
+x1 = memory use of computer
+x2 = number of disk accesses/sec
+x3 = cpu load
+x4 = network traffic.
+
+x5 = (cpu load) / (network traffic)
+x6 = (cpu load)^2 / (network traffic)
+
+
+&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+multivariant gaussian distribution
+
+motivating example: monitoring machines in a data center.
+x1 = (cpu load)
+x2 = (memory use)
+
+in order to fix this, we could use multivariate gaussian distribution
+x belongs to Rn, don't model p(x1),p(x2).. separately, model p(x) all in one go,
+parameters: miu, sigma(covariance matrix)
+
+det(sigma)
+peek of vaussian 
+shrink sigma, the width diminishes. the shrink of the variance.
+the small sigma, the thin tall the p(x) is.
+
+the distribuuib
+one of the cool things about 
+so bar we have been varying the multivariance variable sigma, the peek of the distribution 
+
+
+
+
+
+in this video,  let's develop a anomaly
+
+parameter miu, sigma
+set miu to the average of sample,
+sigma to the variance of sample.
+
+fit model px by setting, 
+
+given a new example x, compute the following. flag an anomaly if p(x) < epsilon.
+
+corresponds to multivariate gaussian, where Sigma = [Sigma1^2, Sigma2^2, Sigma3^2...]
+
+what to choose from, the original model is used more offen, the multivariate gaussian, 
+
+
+manually create features to capture anomalies where x1, x2 take unusual combinations of values.
+if you don't create features like this, then then original model is better,
+computationally cheaper(alternatively, scales better to large)
+
+
+multivariant gaussian distribution is computationally more expensive.
+Must have m > n, or else Sigma is non-invertible. or m >= n is indicative to using multivariant gaussian distribution.
+
+some technical properties, there are usually two cases for this, if you have two features are same, or redundant features, Sigma may not be invertible. you need to make sure if there are such cases exists. 
+
+
+Recommend systems
+try to build better recommend systems
+big ideas in machine learning.
+features are important to ml.
+with some problems, there are algorithms to learn features to use, e.g. recommend system use such algorithms.
+
+predicting movie ratings,
+user rates movies using one to five stars.
+
+movie 			alice 	bob 	carol 	dave
+Love at last		5	5	0	0
+Romance forever		5	?	?	0
+Cute puppies of love	? 	4	0	?
+Nonstop car chases	0	0	5	4
+Sowrds vs karate	0	0	5	?
+
+nu = no. users,
+nm = no. movies
+r(i,j) = i if user j has rated movie i
+y(i,j) = rating given by user j to movie i (defined only if r(i,j) =1 )
+
+the job of recommended system is to predict for a user of a uncommented product
+
+
+Content-based recommendations.
+
+
+x1 romance (the degree a movie is a romance movie) 0.9 1.0 0.99 0.1 0
+x2 action (the degree a movie is an action movie) 0, 0.01, 0 1.0 0.9
+
+x1 = (1, 0.9, 0)
+for each user j, learn a parameter thetaj, predict user j as rating movie i with thetaj * xi stars
+
+for user j, movie i, predited rating: thetaj' * xi
+
+mj = no. of moviews rated by user j to learn thetaj
+
+minimise the over all 
+Optimization algorithm
+
+gradient descent update
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
