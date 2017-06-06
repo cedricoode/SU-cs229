@@ -1,0 +1,183 @@
+learning rate alpha is typically held constant. can slowly decrease alpha over time if we want theta to converge.
+
+continuous stream of data
+online learning
+shipping service website where user comes, specifies origin and destination, you offer to ship their package for some asking price, and users sometimes choose to use your shipping service(y = 1), sometimes not(y = 0)
+features x capture properties of user, of origin/destination and sasking price, we want to learn p(y = 1|x; theta) to optimize price.
+
+logistic regression.
+repeat forever {
+  get (x, y) corresponding to user.
+  update theta using (x,y): theta_j = theta_j - alpha * (h_theta(x) - y) * x_j;
+  
+other online learning example:
+  product search(learning to search):
+    User searches for 'android phone 1080p camera"
+    Have 100 phones in store. Will return 10 results.
+    x = features of phone, how many words in user query match name of phone, how many workds in query match description of phone, etc.
+    y = 1, if user clicks on link. y = 0, otherwise.
+    learn p(y = 1|x; theta).
+    This is a predictive CTR.(click through rate)
+    Use to show user the 10 phones they're most likely to click on.
+    Other examples: choosing special offers to show user; customized selection of news articles; product recommendation; 
+
+map-reduce and data prallelism
+map-reduce is even more important than than stochastic algorithm
+Batch gradient descent: theta_j := theta_j - alpha * 1 / 400 * sum(i:1..400)(h_theta(x(i))- y(i))x(i,j)
+Machine 1: Use(x(1), y(1)), ...,(x(100),y(100));
+temp(1, j) = sum(i: 1..100)(h_theta(x(i)) - y(i)) * x(i, j);
+Machine 2: Use(x(101), y(101)), ..., (x(200), y(200));
+temp(2, j) = sum(i: 101..200)(h_theta(i) - y(i)) * x(i, j);
+
+multi-core machines. reduce network latencies.
+
+some algorithms could paralellize the calculation automatically.
+
+take advantages of this mr technique to speed up the learning rate.
+
+Photo OCR.
+concept of ML pipeline.
+photo optical character recognition problem.
+how to get our computers to understand the content of a image.
+1. (Text detection)detect the characters of a picture
+2. (Character segmentation)read the characters in the photo.
+3. (character classification)
+(4. character correction)
+
+provide a camera to a blind people to understand the signs of a street.
+
+ML OCR pipeline
+
+Image -> Text detection -> Character segmentation -> Character recognition
+
+a group of engineers will work on this, then they should be dividen in small groups for each pipe.
+
+Sliding windows classifier:
+Text detection:
+  Pedestrian detection:
+    find individuals in pedestrian, use a fixed aspect ratial for all individuals.
+    pixels in 82 * 36 image patches.
+    positive examples(y = 1) containing a pedestrian.
+    negative examples(y = 0)
+    taking a rectanguler patch.
+    choose a step-size to generate patches.(slide a window of size 82 * 36).
+    
+  use a labeled training set. positive examples should be patches which identify a character.
+  expansion parameter, which will expand the text regions to several single white blocks which might contain characters.
+
+Character segmentation:
+  Use a supervised learning algorithm.
+  Try to decide if there is a split between two characters.
+  Positive examples (y = 1), there is a split in a patch sample.
+
+Character classification:
+  Use a supervised learning algorithm.
+  Try to identify each character.
+
+Artifical data synthesis.
+Character recognition.
+Real data, artificial data synthesis is to generate a larger training set using the real dataset.
+
+Synthetic data, e.g. choose a font, choose some characters from the font set, and put that intoa white background photo. this way you will be able to generate a lot of training samples.
+
+another e.g. take examples we currently have, and transform this data to another form(distortion) but keep the key features you'd like to keep.
+
+
+Synthesizing data by introducing distortions: speech recognition.
+Original audio: ...
+Audio on bad cellphone connection
+Noisy background: Crowd
+Noisy background: Machinery.
+
+This example is almost the same as the previous one which is to add some other effect(background sound, or irrelevent signals) but keep the key features.
+
+Distortion introduced should be representation of the type of noise/distortions in the test set.
+
+Usually does not help to add purely random/meaningless noise to data.
+
+xi = intensity(brightness) of pixel i
+xi <- xi + random noise.
+
+
+1. Make sure you have a low bias classifier before expending the effort. (Plot learning curves). E.g. keep increasing the number of features/number of hidden units in neural network until you have a low bias classifier.
+
+
+2. how much work would it be to get 10x as much data as we currently have?
+  artificial data synthesis.
+  collect/label it yourself.
+  Crowd source(E.g. Amazon Mechanical Turk). hire people to lable data for us.
+
+
+The most valueble point is the time working on this system.
+Ceiling Analysis.
+  Estimating the errors due to each component(ceiling analysis)
+  What part of the pipeline should you spend the most time trying to improve.
+  Component		Accuracy	Gain
+  Overall system	72%
+  Text detection	89%		17% 
+  Character segmen	90%		1%
+  Character recog	100%		10%
+  The accuracy on each stage states that if at this stage I get a perfect model in predicting the training set, what are the accuracy I will get after the following pipeline
+
+
+
+Another ceiling analysis example
+Face recognition from images
+(Artificial example)
+Camera Image -> Preprocess(remove background) -> Face detection 
+1. -> Eyes segmentation
+2. -> Nose segmentation
+3. -> Mouth segmentation
+
+-> Logistic regression -> Label
+
+Component	Accuracy	Gain
+Overall system	85%
+Preprocess	85.1%		0.1%
+Face detection	91%		5.9%
+Eyes seg	95%		4%
+Nose seg	96%		1%
+Mouth seg	97%		1%
+Logistic regression 100%	3%
+
+a story:
+a team of two engineers, work on preprocess for nearly a year but after all these work, they discovered that this component's perfectness will not help much for final result.
+
+
+Not to trust the gut feeling about which component to spend effort on, it's better to use ceiling analysis for the compoent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
